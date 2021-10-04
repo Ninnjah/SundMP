@@ -139,6 +139,7 @@ dmypy.json
 cython_debug/
 
 # test files
+test/
 *.mp3
 *.m4a
 *.wav
