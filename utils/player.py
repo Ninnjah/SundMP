@@ -14,6 +14,9 @@ class Player:
         mixer.init(44100)
         pygame.init()
 
+    def is_playing(self):
+        return self.player.get_busy()
+
     def play_sound(self, filename: str) -> None:
         self.player.unload()
         try:
