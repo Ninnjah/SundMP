@@ -1,8 +1,7 @@
-from pathlib import Path
 from typing import List
 
 import pygame
-from pygame import mixer, event, error
+from pygame import mixer, error
 
 
 class Player:
