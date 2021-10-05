@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import List
 
 import pygame
-from pygame import mixer, event
+from pygame import mixer, event, error
 
 
 class Player:
@@ -16,10 +16,12 @@ class Player:
 
     def play_sound(self, filename: str) -> None:
         self.player.unload()
-        self.player.load(filename)
-        self.player.play()
-        for e in event.get():
-            print(type(e))
+        try:
+            self.player.load(filename)
+        except error:
+            raise ValueError("This format doesn't support!")
+        else:
+            self.player.play()
 
     def stop_sound(self):
         self.player.stop()

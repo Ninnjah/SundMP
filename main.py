@@ -7,4 +7,7 @@ if __name__ == "__main__":
     player = Player()
 
     for song in os.listdir("test"):
-        player.play_sound(os.path.join("test", song))
+        try:
+            player.play_sound(os.path.join("test", song))
+        except ValueError:
+            pass
