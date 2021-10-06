@@ -15,13 +15,13 @@ class Player:
         pygame.init()
         self.playlist = list()
 
-    def is_playing(self):
+    def is_playing(self) -> bool:
         return self.channel.get_busy()
 
-    def get_pos(self):
+    def get_pos(self) -> int:
         return int(self.channel.get_pos()/10//60)
 
-    def get_length(self):
+    def get_length(self) -> int:
         return int(self.sound.get_length()*100//60)
 
     def play_sound(self, filename: str) -> None:
@@ -34,11 +34,11 @@ class Player:
         else:
             self.channel.play()
 
-    def stop_sound(self):
+    def stop_sound(self) -> None:
         self.channel.stop()
 
-    def pause_sound(self):
+    def pause_sound(self) -> None:
         self.channel.pause()
 
-    def resume_sound(self):
+    def resume_sound(self) -> None:
         self.channel.unpause()
