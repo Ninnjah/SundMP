@@ -2,34 +2,43 @@ from typing import List
 
 import pygame
 from pygame import mixer, error
+from pygame.mixer import Sound
 
 
 class Player:
     playlist: List[str]
-    player = mixer.music
+    channel = mixer.music
+    sound: Sound
 
     def __init__(self):
-        self.playlist = list()
         mixer.init(44100)
         pygame.init()
+        self.playlist = list()
 
     def is_playing(self):
-        return self.player.get_busy()
+        return self.channel.get_busy()
+
+    def get_pos(self):
+        return int(self.channel.get_pos()/10//60)
+
+    def get_length(self):
+        return int(self.sound.get_length()*100//60)
 
     def play_sound(self, filename: str) -> None:
-        self.player.unload()
+        self.channel.unload()
         try:
-            self.player.load(filename)
+            self.sound = mixer.Sound(filename)
+            self.channel.load(filename)
         except error:
             raise ValueError("This format doesn't support!")
         else:
-            self.player.play()
+            self.channel.play()
 
     def stop_sound(self):
-        self.player.stop()
+        self.channel.stop()
 
     def pause_sound(self):
-        self.player.pause()
+        self.channel.pause()
 
     def resume_sound(self):
-        self.player.unpause()
+        self.channel.unpause()
