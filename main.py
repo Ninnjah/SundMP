@@ -22,9 +22,12 @@ class PlayerUI(QtWidgets.QMainWindow, player_ui.Ui_MainWindow):
         self.button_prev.clicked.connect(self.prev_sound)
         self.action_open_folder.triggered.connect(self.open_folder)
 
-    def open_folder(self):
+    def open_folder(self) -> None:
         """Opens folder with music"""
-        pass
+
+        dir_name: str = QFileDialog.getExistingDirectory(self, 'Select directory')
+
+        self.playlist = [x for x in listdir(Path(dir_name).absolute()) if x.endswith((".mp3", ".wav", ".ogg"))]
 
     def play_pause_sound(self):
         """Pause or play sound"""
