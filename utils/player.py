@@ -22,15 +22,18 @@ class Player:
     def get_length(self) -> int:
         return int(self.sound.get_length()*100//60)
 
-    def play_sound(self, filename: str) -> None:
-        self.channel.unload()
+    def load_sound(self, filename: str) -> None:
         try:
             self.sound = mixer.Sound(filename)
             self.channel.load(filename)
         except error:
             raise ValueError("This format doesn't support!")
         else:
-            self.channel.play()
+            return
+
+    def play_sound(self) -> None:
+        self.channel.unload()
+        self.channel.play()
 
     def stop_sound(self) -> None:
         self.channel.stop()
