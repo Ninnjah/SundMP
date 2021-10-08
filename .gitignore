@@ -143,3 +143,8 @@ test/
 *.mp3
 *.m4a
 *.wav
+
+# UI files
+*.ui
+*.qrc
+*.png
