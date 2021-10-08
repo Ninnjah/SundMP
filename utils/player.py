@@ -6,14 +6,12 @@ from pygame.mixer import Sound
 
 
 class Player:
-    playlist: List[str]
     channel = mixer.music
     sound: Sound
 
     def __init__(self):
         mixer.init(44100)
         pygame.init()
-        self.playlist = list()
 
     def is_playing(self) -> bool:
         return self.channel.get_busy()
