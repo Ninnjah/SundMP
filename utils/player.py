@@ -17,10 +17,10 @@ class Player:
         return self.channel.get_busy()
 
     def get_pos(self) -> int:
-        return int(self.channel.get_pos()/10//60)
+        return int(self.channel.get_pos()//1000)
 
     def get_length(self) -> int:
-        return int(self.sound.get_length()*100//60)
+        return int(self.sound.get_length())
 
     def load_sound(self, filename: str) -> None:
         self.channel.unload()
