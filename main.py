@@ -58,13 +58,7 @@ class PlayerUI(QMainWindow, player_ui.Ui_MainWindow):
 
         for song in self.playlist:
             try:
-                player.load_sound(song)
-
-                self.title_label.setText(song.split("/")[-1])
-                self.display_timer.start()
-
-                player.play_sound()
-
+                self.play_sound(song)
             except ValueError:
                 continue
 
@@ -80,9 +74,16 @@ class PlayerUI(QMainWindow, player_ui.Ui_MainWindow):
         self.playbar_length.setText(f"{current_length // 60:02d}:{current_length % 60:02d}")
         self.playbar_current.setText(f"{current_pos // 60:02d}:{current_pos % 60:02d}")
 
+    def play_sound(self, filename: str) -> None:
+        player.load_sound(filename)
+
+        self.title_label.setText(filename.split("/")[-1])
+        self.display_timer.start()
+
+        player.play_sound()
+
     def next_sound(self):
         """Plays next sound"""
-        pass
 
     def prev_sound(self):
         """Plays previous sound"""
