@@ -23,6 +23,7 @@ class Player:
         return int(self.sound.get_length()*100//60)
 
     def load_sound(self, filename: str) -> None:
+        self.channel.unload()
         try:
             self.sound = mixer.Sound(filename)
             self.channel.load(filename)
@@ -32,7 +33,6 @@ class Player:
             return
 
     def play_sound(self) -> None:
-        self.channel.unload()
         self.channel.play()
 
     def stop_sound(self) -> None:
