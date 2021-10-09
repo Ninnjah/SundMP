@@ -13,11 +13,17 @@ from utils.player import Player
 
 class PlayerUI(QMainWindow, player_ui.Ui_MainWindow):
     playlist: List[str]
+    display_timer: QTimer
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
         self.playlist = list()
+        self.display_timer = QTimer(self)
+        self.display_timer.setInterval(10)
+        self.display_timer.timeout.connect(self.display_info)
+
+        self.playbar_slider.setDisabled(True)
 
         self.button_play.clicked.connect(self.play_pause_sound)
         self.button_next.clicked.connect(self.next_sound)
@@ -52,10 +58,27 @@ class PlayerUI(QMainWindow, player_ui.Ui_MainWindow):
 
         for song in self.playlist:
             try:
-                player.play_sound(song)
+                player.load_sound(song)
+
+                self.title_label.setText(song.split("/")[-1])
+                self.display_timer.start()
+
+                player.play_sound()
 
             except ValueError:
                 continue
+
+    def display_info(self):
+        if not player.is_playing():
+            self.display_timer.stop()
+
+        current_length: int = player.get_length()
+        current_pos: int = player.get_pos()
+
+        self.playbar_slider.setMaximum(current_length)
+        self.playbar_slider.setSliderPosition(current_pos)
+        self.playbar_length.setText(f"{current_length // 60:02d}:{current_length % 60:02d}")
+        self.playbar_current.setText(f"{current_pos // 60:02d}:{current_pos % 60:02d}")
 
     def next_sound(self):
         """Plays next sound"""
